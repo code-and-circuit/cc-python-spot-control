@@ -1,4 +1,4 @@
-from cc_spot_python import Robot
+from cc_spot import Robot
 import time
 
 robot = Robot('192.168.86.32', 'test')
