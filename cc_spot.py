@@ -58,7 +58,11 @@ class Robot:
         loop.run_until_complete(future)
 
     async def websocket_loop(self):
-        self.ws = connect(self.ws_url)
+        try:
+            self.ws = connect(self.ws_url)
+        except:
+            print("Couldn't connect to robot!")
+            return
         try:
             self.ws.recv()
             self.ws.send(json.dumps({
@@ -77,12 +81,14 @@ class Robot:
                     args = command['Args']
                 except KeyError:
                     args = ''
-
-                self.ws.send(json.dumps({
-                    'type': 'command',
-                    'Command': command['Command'],
-                    'Args': args
-                }))
+                try:
+                    self.ws.send(json.dumps({
+                        'type': 'command',
+                        'Command': command['Command'],
+                        'Args': args
+                    }))
+                except:
+                    print("Problem sending command!")
                 self.ws_commands_to_send.pop(0)
 
     def send_program(self):
