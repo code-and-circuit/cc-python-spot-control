@@ -201,7 +201,7 @@ class Robot:
         }
         self._send_command(command_info)
         if not self.is_editing_program:
-            time.sleep(1)
+            time.sleep(3)
 
     '''
     Tells spot to wait for a specified amount of time
